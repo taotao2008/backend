@@ -2856,6 +2856,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "revolt-models"
+version = "0.1.0"
+dependencies = [
+ "schemars",
+ "serde",
+]
+
+[[package]]
 name = "revolt-quark"
 version = "0.1.0"
 dependencies = [
