@@ -8,3 +8,9 @@ pub struct MigrationInfo {
     /// Current database revision
     pub revision: i32,
 }
+
+impl MigrationInfo {
+    pub fn method_on_struct_itself(&self) {
+        println!("hello");
+    }
+}

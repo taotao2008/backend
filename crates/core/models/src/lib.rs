@@ -6,6 +6,9 @@ extern crate serde;
 #[macro_use]
 extern crate schemars;
 
+#[macro_use]
+extern crate async_trait;
+
 macro_rules! common_derives {
     () => {
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -15,7 +18,6 @@ macro_rules! common_derives {
 }
 
 pub mod admin;
-pub mod channels;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

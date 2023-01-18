@@ -8,8 +8,20 @@ edition = "2021"
 [features]
 serde = [ "dep:serde" ]
 schema = [ "dep:schemars" ]
-default = [ "serde" ]
+database_ops = [ "dep:revolt-database" ]
+# TODO: default = [ "serde" ]
+default = [ "serde", "database_ops" ]
 
 [dependencies]
-serde = { version = "1", features = ["derive"], optional = true }
+# Serialisation
 schemars = { version = "0.8.8", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+
+# Language Features
+async-trait = "0.1.51"
+
+# TODO: remove, only needed for example
+async-std = { version = "1.8.0", features = ["attributes"] }
+
+# Peer dependencies
+revolt-database = { path = "../database", version = "0.1.0", optional = true }

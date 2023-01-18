@@ -2816,6 +2816,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "revolt-database"
+version = "0.1.0"
+
+[[package]]
 name = "revolt-delta"
 version = "0.5.5"
 dependencies = [
@@ -2859,6 +2863,9 @@ dependencies = [
 name = "revolt-models"
 version = "0.1.0"
 dependencies = [
+ "async-std",
+ "async-trait",
+ "revolt-database",
  "schemars",
  "serde",
 ]
