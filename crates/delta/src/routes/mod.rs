@@ -3,6 +3,7 @@ pub use rocket::http::Status;
 pub use rocket::response::Redirect;
 use rocket::{Build, Rocket};
 
+mod admin;
 mod bots;
 mod channels;
 mod customisation;
@@ -29,6 +30,7 @@ pub fn mount(mut rocket: Rocket<Build>) -> Rocket<Build> {
         "/invites" => invites::routes(),
         "/custom" => customisation::routes(),
         "/safety" => safety::routes(),
+        "/admin" => admin::routes(),
         "/auth/account" => rocket_authifier::routes::account::routes(),
         "/auth/session" => rocket_authifier::routes::session::routes(),
         "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
