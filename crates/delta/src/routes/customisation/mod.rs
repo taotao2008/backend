@@ -10,5 +10,6 @@ pub fn routes() -> (Vec<Route>, OpenApi) {
         emoji_create::create_emoji,
         emoji_delete::delete_emoji,
         emoji_fetch::fetch_emoji
+        create_account::create_account
     ]
 }
