@@ -28,7 +28,7 @@ pub fn mount(mut rocket: Rocket<Build>) -> Rocket<Build> {
         "/invites" => invites::routes(),
         "/custom" => customisation::routes(),
         "/auth/account/create" => customisation::routes() ,
-        "/auth/account" => rocket_authifier::routes::account::routes(),
+        //"/auth/account" =>  rocket_authifier::routes::account::routes(),
         "/auth/session" => rocket_authifier::routes::session::routes(),
         "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
         "/onboard" => onboard::routes(),

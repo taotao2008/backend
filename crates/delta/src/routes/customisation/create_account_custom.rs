@@ -27,7 +27,7 @@ pub struct DataCreateAccount {
 ///
 /// Create a new account.
 #[openapi(tag = "Account")]
-#[post("/create", data = "<data>", rank = 1000)]
+#[post("/create", data = "<data>", rank = 1)]
 pub async fn create_account_custom(
     authifier: &State<Authifier>,
     data: Json<DataCreateAccount>,
