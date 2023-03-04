@@ -1,6 +1,6 @@
 # Revolt Backend
 
-This is a monorepo for the Revolt backend.
+This is a monorepo for the Revolt backend own.
 
 | Crate            | Path                                           | Description                          |
 | ---------------- | ---------------------------------------------- | ------------------------------------ |
