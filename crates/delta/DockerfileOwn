@@ -1,0 +1,18 @@
+# Build Stage
+#FROM ghcr.io/revoltchat/base:latest AS builder
+#RUN apt-get install git -y
+WORKDIR /opt/
+RUN git clone -b base git@github.com:taotao2008/backend.git
+WORKDIR /opt/base
+RUN git pull
+RUN cargo install --locked --path crates/delta
+
+# Bundle Stage
+FROM debian:buster-slim
+RUN apt-get update && apt-get install -y ca-certificates
+COPY --from=builder /usr/local/cargo/bin/revolt-delta ./
+
+EXPOSE 8000
+ENV ROCKET_ADDRESS 0.0.0.0
+ENV ROCKET_PORT 8000
+CMD ["./revolt-delta"]
