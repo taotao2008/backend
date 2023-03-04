@@ -1,9 +1,12 @@
-use std::collections::HashMap;
-use reqwest::header::HeaderMap;
-use serde_json::value::Value;
-use url::Url;
-use std::error::Error;
-use crate::util::regex::ADMIN_URL;
+
+use serde::Deserialize;
+use serde::Serialize;
+use revolt_quark::authifier::{Result};
+use rocket::serde::json::Json;
+
+use rocket_empty::EmptyResponse;
+
+
 
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
@@ -23,23 +26,20 @@ pub struct DataCreateAccount {
 /// Create a new account.
 #[openapi(tag = "Account")]
 #[post("/create", data = "<data>")]
-pub async fn create_account(
-    authifier: &State<Authifier>,
+pub async fn create_account (
     data: Json<DataCreateAccount>,
-    mut shield: ShieldValidationInput,
 ) -> Result<EmptyResponse> {
     let data = data.into_inner();
 
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    let url = ADMIN_URL + "/sso/registerWithoutAuthCode";
+    let url =  "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
 
     let params = [("password", data.password),
         ("emailAddress", data.email)];
 
     // 发起post请求并返回
-    Ok(client.post(url).form(&params).send().await?.json::<HashMap<String, Value>>().await?);
-
+    client.post(url).form(&params).send().await;
     Ok(EmptyResponse)
 }
