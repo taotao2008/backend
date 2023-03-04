@@ -4,6 +4,7 @@ use rocket::Route;
 mod emoji_create;
 mod emoji_delete;
 mod emoji_fetch;
+mod create_account;
 
 pub fn routes() -> (Vec<Route>, OpenApi) {
     openapi_get_routes_spec![

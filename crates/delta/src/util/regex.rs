@@ -13,4 +13,4 @@ pub static RE_USERNAME: Lazy<Regex> =
 /// Alphanumeric and underscores
 pub static RE_EMOJI: Lazy<Regex> = Lazy::new(|| Regex::new(r"^[a-z0-9_]+$").unwrap());
 
-pub static ADMIN_URL: String = "http://bk.securechat.cn:8085";
+pub static ADMIN_URL: String = "http://bk.securechat.cn:8085".to_string();
