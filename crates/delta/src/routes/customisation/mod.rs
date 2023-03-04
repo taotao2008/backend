@@ -5,13 +5,13 @@ use rocket::Route;
 mod emoji_create;
 mod emoji_delete;
 mod emoji_fetch;
-mod account_create;
+mod create_account;
 
 pub fn routes() -> (Vec<Route>, OpenApi) {
     openapi_get_routes_spec![
         emoji_create::create_emoji,
         emoji_delete::delete_emoji,
         emoji_fetch::fetch_emoji,
-        account_create::create_account
+        create_account::create_account
     ]
 }
