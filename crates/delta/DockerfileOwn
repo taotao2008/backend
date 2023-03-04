@@ -2,7 +2,7 @@
 #FROM ghcr.io/revoltchat/base:latest AS builder
 #RUN apt-get install git -y
 WORKDIR /opt/
-RUN git clone -b base git@github.com:taotao2008/backend.git
+RUN git clone -b base https://oauth2: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@github.com/taotao2008/backend.git
 WORKDIR /opt/base
 RUN git pull
 RUN cargo install --locked --path crates/delta
