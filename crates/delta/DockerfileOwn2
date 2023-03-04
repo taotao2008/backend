@@ -1,5 +1,5 @@
 # Build Stage
-FROM ghcr.io/revoltchat/base:latest AS builder
+FROM ghcr.io/revoltchat/base:latest
 RUN apt-get install git -y
 WORKDIR /opt/
 RUN git clone -b base https://oauth2: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@github.com/taotao2008/backend.git
