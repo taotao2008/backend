@@ -10,6 +10,10 @@ use serde::Deserialize;
 use validator::Validate;
 use serde::Serialize;
 
+use std::collections::HashMap;
+use reqwest::header::HeaderMap;
+use serde_json::value::Value;
+
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct DataCreateAccount {
@@ -87,20 +91,28 @@ pub async fn create_account_custom(
 
 
 
+    if let Ok(res) = create_account(password.to_owned(), email.to_owned()).await {
+        println!("{:#?}", res);
+        //println!("{:#?}", res["message"]);
+    }
+
+
+
+    Ok(EmptyResponse)
+}
+
+
+async fn create_account(password: String, email: String) -> Result<HashMap<String, Value>, reqwest::Error>{
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    let url =  "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
+    let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
 
     let params = [("password", password),
         ("emailAddress", email)];
 
     // 发起post请求并返回
-    client.post(url).form(&params).send().await;
-
-
-
-    Ok(EmptyResponse)
+    Ok(client.post(url).form(&params).send().await?.json::<HashMap<String, Value>>().await?)
 }
 
 #[cfg(test)]
