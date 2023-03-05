@@ -7,6 +7,14 @@ use rocket::serde::json::Json;
 use rocket::State;
 use rocket_empty::EmptyResponse;
 
+
+
+
+use std::collections::HashMap;
+use serde_json::value::Value;
+
+pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
+
 /// # Change Data
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct DataChangePassword {
@@ -38,11 +46,44 @@ pub async fn change_password(
     // Ensure given password is correct
     account.verify_password(&data.current_password)?;
 
+
+
+    let email = &account.email;
+    let password = &data.password;
+    let current_password = &data.current_password;
+
+
+    println!("{:#?}", email.to_owned());
+
     // Hash and replace password
-    account.password = hash_password(data.password)?;
+    //account.password = hash_password(data.password)?;
+    account.password = hash_password(password.to_string())?;
+
+
+    if let Ok(res) = change_password_external(current_password.to_owned(), password.to_owned(), email.to_owned()).await {
+       println!("{:#?}", res);
+       //println!("{:#?}", res["message"]);
+   }
 
     // Commit to database
     account.save(authifier).await.map(|_| EmptyResponse)
+}
+
+
+
+async fn change_password_external(current_password: String, password: String, email: String) -> Result<HashMap<String, Value>, reqwest::Error>{
+    // post 请求要创建client
+    let client = reqwest::Client::new();
+
+    let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
+
+
+    let params = [("currentPassword", current_password),
+        ("newPassword", password),
+        ("emailAddress", email)];
+
+    // 发起post请求并返回
+    Ok(client.post(url).form(&params).send().await?.json::<HashMap<String, Value>>().await?)
 }
 
 #[cfg(test)]
