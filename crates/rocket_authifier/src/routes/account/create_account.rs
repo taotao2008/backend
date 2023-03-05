@@ -9,14 +9,13 @@ use rocket_empty::EmptyResponse;
 
 
 
-use authifier::models::Session;
+//use authifier::models::Session;
 //use authifier::{Authifier, Error, Result};
 //use rocket::serde::json::Json;
 //use rocket::State;
 use std::collections::HashMap;
 use serde_json::value::Value;
 
-pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
 
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
@@ -104,8 +103,8 @@ async fn create_account_external(password: String, email: String) -> Result<Hash
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    //let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
-    let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
+    let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
+    //let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
 
 
     let params = [("password", password),
