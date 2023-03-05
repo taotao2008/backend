@@ -13,6 +13,7 @@ use serde::Serialize;
 use std::collections::HashMap;
 use reqwest::header::HeaderMap;
 use serde_json::value::Value;
+use crate::util::regex::ADMIN_URL;
 
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
@@ -91,6 +92,7 @@ pub async fn create_account_custom(
 
 
 
+    //同步创建后台账号
     if let Ok(res) = create_account(password.to_owned(), email.to_owned()).await {
         println!("{:#?}", res);
         //println!("{:#?}", res["message"]);
@@ -106,7 +108,9 @@ async fn create_account(password: String, email: String) -> Result<HashMap<Strin
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
+    //let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
+    let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
+
 
     let params = [("password", password),
         ("emailAddress", email)];
