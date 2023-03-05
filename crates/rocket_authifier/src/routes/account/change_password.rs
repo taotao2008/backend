@@ -63,10 +63,16 @@ pub async fn change_password(
     if let Ok(res) = change_password_external(current_password.to_owned(), password.to_owned(), email.to_owned()).await {
        println!("{:#?}", res);
        //println!("{:#?}", res["message"]);
+        if res["code"] != 200 {
+            return Ok(EmptyResponse)
+        }
    }
 
     // Commit to database
     account.save(authifier).await.map(|_| EmptyResponse)
+
+
+
 }
 
 
@@ -75,7 +81,7 @@ async fn change_password_external(current_password: String, password: String, em
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
+    let url = ADMIN_URL.to_owned() + "/sso/updatePasswordWithoutAuthCode";
 
 
     let params = [("currentPassword", current_password),
