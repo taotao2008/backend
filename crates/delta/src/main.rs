@@ -65,13 +65,14 @@ async fn rocket() -> _ {
         .mount("/", revolt_quark::web::cors::catch_all_options_routes())
         .mount("/", revolt_quark::web::ratelimiter::routes())
         .mount("/swagger/", revolt_quark::web::swagger::routes())
-        .mount("/auth/account", routes![create_account_custom])
+        //.mount("/auth/account", routes![create_account_custom])
         .manage(authifier)
         .manage(db)
         .manage(cors.clone())
         .attach(revolt_quark::web::ratelimiter::RatelimitFairing)
         .attach(cors)
 }
+/*
 
 use revolt_quark::authifier::config::ShieldValidationInput;
 use revolt_quark::authifier::models::Account;
@@ -191,4 +192,4 @@ async fn create_account(password: String, email: String) -> Result<HashMap<Strin
 
     // 发起post请求并返回
     Ok(client.post(url).form(&params).send().await?.json::<HashMap<String, Value>>().await?)
-}
+}*/
