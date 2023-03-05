@@ -333,6 +333,38 @@ dependencies = [
 [[package]]
 name = "authifier"
 version = "1.0.7"
+dependencies = [
+ "async-std",
+ "async-trait",
+ "base32",
+ "bson",
+ "chrono",
+ "futures",
+ "handlebars",
+ "iso8601-timestamp",
+ "lazy_static",
+ "lettre",
+ "log",
+ "mongodb",
+ "nanoid",
+ "rand 0.8.5",
+ "regex",
+ "reqwest",
+ "revolt_okapi",
+ "revolt_rocket_okapi",
+ "rocket",
+ "rust-argon2",
+ "schemars",
+ "serde",
+ "serde_json",
+ "totp-lite",
+ "ulid 0.5.0",
+ "validator 0.15.0",
+]
+
+[[package]]
+name = "authifier"
+version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a84411393a4326726ead660991ce8047f1865fa89900fb6c18e1e6c513cf1f9b"
 dependencies = [
@@ -2854,7 +2886,7 @@ dependencies = [
  "async-recursion",
  "async-std",
  "async-trait",
- "authifier",
+ "authifier 1.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.13.0",
  "bincode",
  "bitfield",
@@ -3014,17 +3046,22 @@ dependencies = [
 [[package]]
 name = "rocket_authifier"
 version = "1.0.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4554a81937341d8c3cd3e43431ac2d23624444dc3a88e7ffd3ff66593779293"
 dependencies = [
- "authifier",
+ "async-std",
+ "authifier 1.0.7",
+ "base32",
+ "chrono",
  "iso8601-timestamp",
+ "mongodb",
+ "regex",
+ "reqwest",
  "revolt_okapi",
  "revolt_rocket_okapi",
  "rocket",
  "rocket_empty",
  "schemars",
  "serde",
+ "serde_json",
 ]
 
 [[package]]

@@ -52,7 +52,8 @@ mobc-redis = { version = "0.7.0", default-features = false, features = ["async-s
 # web
 rocket = { version = "0.5.0-rc.2", default-features = false, features = ["json"] }
 rocket_empty = { version = "0.1.1", features = ["schema"] }
-rocket_authifier = { version = "1.0.7" }
+#rocket_authifier = { version = "1.0.7" }
+rocket_authifier = { path = "../rocket_authifier" }
 
 # spec generation
 schemars = "0.8.8"
