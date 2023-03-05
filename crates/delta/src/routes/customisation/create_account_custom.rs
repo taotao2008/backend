@@ -32,7 +32,7 @@ pub struct DataCreateAccount {
 ///
 /// Create a new account.
 #[openapi(tag = "Account")]
-#[post("/create", data = "<data>", rank=0)]
+#[post("/create", data = "<data>", rank=0 )]
 pub async fn create_account_custom(
     authifier: &State<Authifier>,
     data: Json<DataCreateAccount>,
