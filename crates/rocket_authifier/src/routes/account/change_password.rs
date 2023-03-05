@@ -53,7 +53,7 @@ pub async fn change_password(
     let current_password = &data.current_password;
 
 
-    println!("{:#?}", email.to_owned());
+    //println!("{:#?}", email.to_owned());
 
     // Hash and replace password
     //account.password = hash_password(data.password)?;
@@ -63,9 +63,6 @@ pub async fn change_password(
     if let Ok(res) = change_password_external(current_password.to_owned(), password.to_owned(), email.to_owned()).await {
        println!("{:#?}", res);
        //println!("{:#?}", res["message"]);
-        if res["code"] != 200 {
-            return Ok(EmptyResponse)
-        }
    }
 
     // Commit to database
