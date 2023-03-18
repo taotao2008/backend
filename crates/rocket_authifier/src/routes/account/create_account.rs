@@ -16,6 +16,7 @@ use rocket_empty::EmptyResponse;
 use std::collections::HashMap;
 use serde_json::value::Value;
 
+// 多元世界常量定义
 pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
 
 /// # Account Data

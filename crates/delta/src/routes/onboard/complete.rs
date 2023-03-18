@@ -7,6 +7,9 @@ use rocket::{serde::json::Json, State};
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 
+// 多元世界常量定义
+pub static DEFAULT_SERVER_ID_1: &'static str = "01GVT45JCEKSAE6YRKA9NQWF3S";
+
 /// # New User Data
 #[derive(Validate, Serialize, Deserialize, JsonSchema)]
 pub struct DataOnboard {
@@ -36,10 +39,20 @@ pub async fn req(
 
     let username = User::validate_username(db, data.username).await?;
     let user = User {
-        id: session.user_id,
+        id: session.user_id.clone(),
         username,
         ..Default::default()
     };
 
-    db.insert_user(&user).await.map(|_| EmptyResponse)
+    db.insert_user(&user).await.map(|_| EmptyResponse);
+
+    let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
+
+    let user = db.fetch_user(&session.user_id.clone()).await?;
+
+    //自动加入内置联邦
+    server
+        .create_member(db, user, None)
+        .await
+        .map(|_| EmptyResponse)
 }
