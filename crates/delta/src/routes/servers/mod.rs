@@ -21,6 +21,7 @@ mod server_create;
 mod server_delete;
 mod server_edit;
 mod server_fetch;
+mod member_create;
 
 pub fn routes() -> (Vec<Route>, OpenApi) {
     openapi_get_routes_spec![
@@ -43,6 +44,7 @@ pub fn routes() -> (Vec<Route>, OpenApi) {
         roles_delete::req,
         permissions_set::req,
         permissions_set_default::req,
-        emoji_list::list_emoji
+        emoji_list::list_emoji,
+        member_create::req,
     ]
 }
