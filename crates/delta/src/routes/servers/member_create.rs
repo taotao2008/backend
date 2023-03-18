@@ -39,6 +39,9 @@ pub async fn req(db: &Db, user: User, target: Ref, member: Ref) -> Result<EmptyR
 //    };
 
 
+    let user = db.fetch_user(&member.id.clone()).await?;
+
+
     server
         .create_member(db, user, None)
         .await
