@@ -1,7 +1,9 @@
 use revolt_quark::{
-    models::{server_member::RemovalIntention, User},
-    perms, Db, EmptyResponse, Error, Permission, Ref, Result,
+    models::{server_member::RemovalIntention, server_member::MemberCompositeKey, Member, User},
+    perms, Db, EmptyResponse, Error, Permission, Ref, Result, Timestamp,
 };
+
+
 
 /// # Create Member
 ///
@@ -21,24 +23,24 @@ pub async fn req(db: &Db, user: User, target: Ref, member: Ref) -> Result<EmptyR
 
 
 
-    let member = member.as_member(db, &server.id).await?;
-
-
-    let member_create = Member {
-        id: MemberCompositeKey {
-            server: server.id.clone(),
-            user: member.id.clone(),
-        },
-        joined_at: Timestamp::now_utc(),
-        nickname: None,
-        avatar: None,
-        roles: vec![],
-        timeout: None,
-    };
+//    let member = member.as_member(db, &server.id).await?;
+//
+//
+//    let member_create = Member {
+//        id: MemberCompositeKey {
+//            server: server.id.clone(),
+//            user: member.id.clone(),
+//        },
+//        joined_at: Timestamp::now_utc(),
+//        nickname: None,
+//        avatar: None,
+//        roles: vec![],
+//        timeout: None,
+//    };
 
 
     server
-        .create_member(db, member_create, None)
+        .create_member(db, user, None)
         .await
         .map(|_| EmptyResponse)
 
