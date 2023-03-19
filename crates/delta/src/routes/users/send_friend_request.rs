@@ -23,9 +23,10 @@ pub async fn req(
 ) -> Result<Json<User>> {
     let mut target = db.fetch_user_by_username(&data.username).await?;
 
-    if user.bot.is_some() || target.bot.is_some() {
-        return Err(Error::IsBot);
-    }
+    //taotao 修改机器人也可以添加为好友
+//    if user.bot.is_some() || target.bot.is_some() {
+//        return Err(Error::IsBot);
+//    }
 
     user.add_friend(db, &mut target).await?;
     Ok(Json(target.with_auto_perspective(db, &user).await))
