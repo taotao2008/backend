@@ -1,11 +1,12 @@
 use crate::util::regex::RE_USERNAME;
 use revolt_quark::{
-    authifier::models::Session, models::User, Database, EmptyResponse, Error, Result,
+    authifier::models::Session, models::User, models::Channel, Database, EmptyResponse, Error, Result,
 };
 
 use rocket::{serde::json::Json, State};
 use serde::{Deserialize, Serialize};
 use validator::Validate;
+use ulid::Ulid;
 
 // 多元世界常量定义
 pub static DEFAULT_SERVER_ID_1: &'static str = "01GVT45JCEKSAE6YRKA9NQWF3S";
@@ -62,6 +63,23 @@ pub async fn req(
     let mut user_bot_accept_1 = db.fetch_user(&DEFAULT_BOT_ID_1.to_owned()).await?;
     user_accept_1.add_friend(db, &mut user_bot_accept_1).await?;
     Json(user_bot_accept_1.with_auto_perspective(db, &user_accept_1).await);
+
+    //taotao 创建内置DM
+
+    // Otherwise try to find or create a DM.
+    if let Ok(channel) = db.find_direct_message_channel(&session.user_id.clone(), &DEFAULT_BOT_ID_1.to_owned()).await {
+        Json(channel);
+    } else {
+        let new_channel = Channel::DirectMessage {
+            id: Ulid::new().to_string(),
+            active: true,
+            recipients: vec![session.user_id.clone(), DEFAULT_BOT_ID_1.to_owned()],
+            last_message_id: None,
+        };
+
+        new_channel.create(db).await?;
+        Json(new_channel);
+    }
 
 
     let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
