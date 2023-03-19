@@ -8,10 +8,8 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use ulid::Ulid;
 
-// 多元世界常量定义
-pub static DEFAULT_SERVER_ID_1: &'static str = "01GVT45JCEKSAE6YRKA9NQWF3S";
-
-pub static DEFAULT_BOT_ID_1: &'static str = "01GVR2VZCS7FXJYT2E75WV6FTW";
+use crate::util::const_def::DEFAULT_SERVER_ID_1;
+use crate::util::const_def::DEFAULT_BOT_ID_1;
 
 /// # New User Data
 #[derive(Validate, Serialize, Deserialize, JsonSchema)]

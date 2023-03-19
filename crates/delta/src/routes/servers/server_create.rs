@@ -46,6 +46,7 @@ pub async fn req(
     user: User,
     info: Json<DataCreateServer>,
 ) -> Result<Json<CreateServerResponse>> {
+    // taotao 管理员才能创建联邦
     if user.id.clone() != DEFAULT_ADMIN_ID_1 {
         return Err(Error::NoEffect);
     }
