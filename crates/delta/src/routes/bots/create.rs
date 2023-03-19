@@ -11,6 +11,7 @@ use rocket::serde::json::Json;
 use serde::Deserialize;
 use ulid::Ulid;
 use validator::Validate;
+use crate::util::const_def::DEFAULT_ADMIN_ID_1;
 
 /// # Bot Details
 #[derive(Validate, Deserialize, JsonSchema)]
@@ -28,6 +29,10 @@ pub struct DataCreateBot {
 pub async fn create_bot(db: &Db, user: User, info: Json<DataCreateBot>) -> Result<Json<Bot>> {
     if user.bot.is_some() {
         return Err(Error::IsBot);
+    }
+    // taotao 管理员才能创建Bot
+    if user.id.clone() != DEFAULT_ADMIN_ID_1 {
+        return Err(Error::NoEffect);
     }
 
     let info = info.into_inner();
