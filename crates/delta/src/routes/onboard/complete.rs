@@ -10,6 +10,8 @@ use validator::Validate;
 // 多元世界常量定义
 pub static DEFAULT_SERVER_ID_1: &'static str = "01GVT45JCEKSAE6YRKA9NQWF3S";
 
+pub static DEFAULT_BOT_ID_1: &'static str = "01GVR2VZCS7FXJYT2E75WV6FTW";
+
 /// # New User Data
 #[derive(Validate, Serialize, Deserialize, JsonSchema)]
 pub struct DataOnboard {
@@ -48,11 +50,27 @@ pub async fn req(
 
     let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
 
-    let user = db.fetch_user(&session.user_id.clone()).await?;
+    //taotao 自动添加内置机器人1
+    let mut user_request = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_1 = db.fetch_user(&session.user_id.clone()).await?;
+    //taotao 步骤一：机器人发出添加好友请求
+    user_bot_1.add_friend(db, &mut user_request).await?;
+    Json(user_request.with_auto_perspective(db, &user_bot_1).await);
 
-    //自动加入内置联邦
+    //taotao 步骤二：好友同意机器人
+    let mut user_accept = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_accept_1 = db.fetch_user(&session.user_id.clone()).await?;
+    user_accept.add_friend(db, &mut user_bot_accept_1).await?;
+    Json(user_bot_accept_1.with_auto_perspective(db, &user_accept).await);
+
+
+
+    //taotao 自动加入内置联邦
     server
         .create_member(db, user, None)
         .await
         .map(|_| EmptyResponse)
+
+
+
 }
