@@ -32,7 +32,7 @@ pub async fn create_bot(db: &Db, user: User, info: Json<DataCreateBot>) -> Resul
     }
     // taotao 管理员才能创建Bot
     if user.id.clone() != DEFAULT_ADMIN_ID_1 {
-        return Err(Error::NoEffect);
+        return Err(Error::ReachedMaximumBots);
     }
 
     let info = info.into_inner();
