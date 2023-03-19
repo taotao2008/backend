@@ -11,6 +11,8 @@ use serde::{Deserialize, Serialize};
 use ulid::Ulid;
 use validator::Validate;
 
+use crate::util::const_def::DEFAULT_ADMIN_ID_1;
+
 /// # Server Data
 #[derive(Validate, Deserialize, JsonSchema)]
 pub struct DataCreateServer {
@@ -44,6 +46,9 @@ pub async fn req(
     user: User,
     info: Json<DataCreateServer>,
 ) -> Result<Json<CreateServerResponse>> {
+    if user.id.clone() != DEFAULT_ADMIN_ID_1 {
+        return Err(Error::NoEffect);
+    }
     let info = info.into_inner();
     info.validate()
         .map_err(|error| Error::FailedValidation { error })?;
