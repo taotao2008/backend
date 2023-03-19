@@ -48,23 +48,23 @@ pub async fn req(
 
     db.insert_user(&user).await.map(|_| EmptyResponse);
 
-    let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
+
 
     //taotao 自动添加内置机器人1
-    let mut user_request = db.fetch_user(&session.user_id.clone()).await?;
-    let mut user_bot_1 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_request_1 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_1 = db.fetch_user(&DEFAULT_BOT_ID_1.to_owned()).await?;
     //taotao 步骤一：机器人发出添加好友请求
-    user_bot_1.add_friend(db, &mut user_request).await?;
-    Json(user_request.with_auto_perspective(db, &user_bot_1).await);
+    user_bot_1.add_friend(db, &mut user_request_1).await?;
+    Json(user_request_1.with_auto_perspective(db, &user_bot_1).await);
 
     //taotao 步骤二：好友同意机器人
-    let mut user_accept = db.fetch_user(&session.user_id.clone()).await?;
-    let mut user_bot_accept_1 = db.fetch_user(&session.user_id.clone()).await?;
-    user_accept.add_friend(db, &mut user_bot_accept_1).await?;
-    Json(user_bot_accept_1.with_auto_perspective(db, &user_accept).await);
+    let mut user_accept_1 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_accept_1 = db.fetch_user(&DEFAULT_BOT_ID_1.to_owned()).await?;
+    user_accept_1.add_friend(db, &mut user_bot_accept_1).await?;
+    Json(user_bot_accept_1.with_auto_perspective(db, &user_accept_1).await);
 
 
-
+    let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
     //taotao 自动加入内置联邦
     server
         .create_member(db, user, None)
