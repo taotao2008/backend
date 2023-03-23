@@ -15,6 +15,8 @@ use rocket::serde::json::Json;
 use serde::{Deserialize, Serialize};
 use ulid::Ulid;
 use validator::Validate;
+use crate::util::const_def::DEFAULT_ADMIN_ID_1;
+use crate::util::const_def::DEFAULT_BOT_ID_1;
 
 #[derive(Validate, Serialize, Deserialize, JsonSchema)]
 pub struct DataMessageSend {
@@ -66,7 +68,13 @@ pub async fn message_send(
         .map_err(|error| Error::FailedValidation { error })?;
 
     // Validate Message is within reasonable length limits
-    Message::validate_sum(&data.content, &data.embeds)?;
+    //Message::validate_sum(&data.content, &data.embeds)?;
+
+    // taotao 管理员和机器人Bot不限制输出内容长度
+    if !(user.id.clone() == DEFAULT_ADMIN_ID_1 || user.id.clone() == DEFAULT_BOT_ID_1) {
+        Message::validate_sum(&data.content, &data.embeds)?;
+
+    }
 
     // Ensure the request is unique
     idempotency.consume_nonce(data.nonce).await?;

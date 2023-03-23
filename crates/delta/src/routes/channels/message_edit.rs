@@ -8,6 +8,8 @@ use revolt_quark::{
 use rocket::serde::json::Json;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
+use crate::util::const_def::DEFAULT_ADMIN_ID_1;
+use crate::util::const_def::DEFAULT_BOT_ID_1;
 
 /// # Message Details
 #[derive(Validate, Serialize, Deserialize, JsonSchema)]
@@ -36,7 +38,12 @@ pub async fn req(
     edit.validate()
         .map_err(|error| Error::FailedValidation { error })?;
 
-    Message::validate_sum(&edit.content, &edit.embeds)?;
+    // taotao 管理员和机器人Bot不限制输出内容长度
+    if !(user.id.clone() == DEFAULT_ADMIN_ID_1 || user.id.clone() == DEFAULT_BOT_ID_1) {
+        Message::validate_sum(&edit.content, &edit.embeds)?;
+    }
+
+
 
     let mut message = msg.as_message(db).await?;
     if message.channel != target {
