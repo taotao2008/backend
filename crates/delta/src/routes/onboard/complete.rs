@@ -128,19 +128,22 @@ pub async fn req(
     });
 
     info!("data_json=");
-    info!(data_json);
+    info!("{}", data_json);
+
 
     let current_time = Utc::now().timestamp_millis();
 
     let mut data_item = (current_time, data_json.to_string());
     info!("data_item=");
-    info!(data_item);
+    info!("{}", data_item);
+
 
     let mut settings_data: UserSettings = HashMap::new();
     settings_data.insert(session.user_id.clone(),data_item );
 
     info!("settings_data=");
-    info!(settings_data);
+    info!("{}", settings_data);
+
 
     db.set_user_settings(&session.user_id.clone(), &settings_data ).await?;
     //进行默认用户设置-结束
