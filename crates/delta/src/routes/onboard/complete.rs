@@ -143,8 +143,8 @@ pub async fn req(
     settings_data.insert(session.user_id.clone(),data_item );
 
     info!("settings_data=");
-    info!("{}", settings_data.get(session.user_id.clone()).0);
-    info!("{}", settings_data.get(session.user_id.clone()).1);
+    info!("{}", settings_data.get(&session.user_id.clone()).0);
+    info!("{}", settings_data.get(&session.user_id.clone()).1);
 
 
     db.set_user_settings(&session.user_id.clone(), &settings_data ).await?;
