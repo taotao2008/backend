@@ -148,7 +148,7 @@ pub async fn req(
     //info!("{}", settings_data.get(&session.user_id.clone()).1);
 
 
-    db.set_user_settings(&session.user_id.clone(), settings_data ).await?;
+    db.set_user_settings(&session.user_id.clone(), &settings_data ).await?;
     //进行默认用户设置-结束
 
 
