@@ -135,14 +135,16 @@ pub async fn req(
 
     let mut data_item = (current_time, data_json.to_string());
     info!("data_item=");
-    info!("{}, {}", data_item);
+    info!("{}", data_item.0);
+    info!("{}", data_item.1);
 
 
     let mut settings_data: UserSettings = HashMap::new();
     settings_data.insert(session.user_id.clone(),data_item );
 
     info!("settings_data=");
-    info!("{}, {}", settings_data.get(session.user_id.clone()));
+    info!("{}", settings_data.get(session.user_id.clone()).0);
+    info!("{}", settings_data.get(session.user_id.clone()).1);
 
 
     db.set_user_settings(&session.user_id.clone(), &settings_data ).await?;
