@@ -1,0 +1,99 @@
+{$HOSTNAME} {
+        route /api* {
+                uri strip_prefix /api
+                reverse_proxy http://api:8000
+        }
+
+        route /ws {
+                @upgrade {
+                        header Connection *Upgrade*
+                        header Upgrade websocket
+                }
+                @upgrade_alias {
+                        header Connection *upgrade*
+                        header Upgrade websocket
+                }
+
+                uri strip_prefix /ws
+                reverse_proxy @upgrade http://events:9000
+                reverse_proxy @upgrade_alias http://events:9000
+        }
+
+        route /autumn* {
+                uri strip_prefix /autumn
+                reverse_proxy http://autumn:3000
+        }
+
+        route /january* {
+                uri strip_prefix /january
+                reverse_proxy http://january:7000
+        }
+
+        route /mongo {
+                uri strip_prefix /mongo
+                reverse_proxy http://mongo:27017
+        }
+
+        reverse_proxy http://web:5000
+}
+https://www.securechat.cn { # 网站的域名信息
+        reverse_proxy http://user-center:5173 # 反向代理
+        redir / /index.html
+}
+https://bk-api.securechat.cn { # 网站的域名信息
+        reverse_proxy http://bk.securechat.cn:8085 # 反向代理
+}
+https://bk-bot.securechat.cn { # 网站的域名信息
+        reverse_proxy http://bot.securechat.cn:3002 # 反向代理
+}
+
+
+
+https://aizen.chat, https://app.aizen.chat {
+        route /api* {
+                uri strip_prefix /api
+                reverse_proxy http://api:8000
+        }
+
+        route /ws {
+                @upgrade {
+                        header Connection *Upgrade*
+                        header Upgrade websocket
+                }
+                @upgrade_alias {
+                        header Connection *upgrade*
+                        header Upgrade websocket
+                }
+
+                uri strip_prefix /ws
+                reverse_proxy @upgrade http://events:9000
+                reverse_proxy @upgrade_alias http://events:9000
+        }
+
+        route /autumn* {
+                uri strip_prefix /autumn
+                reverse_proxy http://autumn:3000
+        }
+
+        route /january* {
+                uri strip_prefix /january
+                reverse_proxy http://january:7000
+        }
+
+        route /mongo {
+                uri strip_prefix /mongo
+                reverse_proxy http://mongo:27017
+        }
+
+        reverse_proxy http://web:5000
+}
+https://www.aizen.chat { # 网站的域名信息
+        reverse_proxy http://user-center:5173 # 反向代理
+        redir / /index.html
+}
+https://bk-api.aizen.chat { # 网站的域名信息
+        reverse_proxy http://bk.securechat.cn:8085 # 反向代理
+}
+https://bk-bot.aizen.chat { # 网站的域名信息
+        reverse_proxy http://bot.securechat.cn:3002 # 反向代理
+}
