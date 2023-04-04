@@ -124,7 +124,8 @@ pub async fn req(
 
     //进行默认用户设置
     let data_json = json!({
-        "appearance": { "appearance:emoji":"mutant", "appearance:show_send_button":true }
+        "appearance:emoji":"mutant",
+        "appearance:show_send_button":true
     });
 
     info!("data_json=");
@@ -140,7 +141,7 @@ pub async fn req(
 
 
     let mut settings_data: UserSettings = HashMap::new();
-    settings_data.insert(session.user_id.clone(),data_item );
+    settings_data.insert(&session.user_id.clone(),&data_item );
 
     info!("settings_data=");
     //info!("{}", settings_data.get(session.user_id.clone()).0);
