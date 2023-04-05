@@ -123,30 +123,24 @@ pub async fn req(
     //taotao 创建内置DM-机器人2-dalle-e-结束
 
     //进行默认用户设置
-    let data_json = json!({
+    let current_time = Utc::now().timestamp_millis();
+    //定义默认show button
+    let data_show_button_json = json!({
         "appearance:emoji":"mutant",
         "appearance:show_send_button":true
     });
+    let mut data_item_show_button = (current_time, data_show_button_json.to_string());
 
-    info!("data_json=");
-    info!("{}", data_json.to_string());
-
-
-    let current_time = Utc::now().timestamp_millis();
-
-    let mut data_item = (current_time, data_json.to_string());
-    info!("data_item=");
-    info!("{}", data_item.0);
-    info!("{}", data_item.1);
+    //定义默认语言
+    let data_lang_json = json!({"lang":"zh_Hans"});
+    let mut data_item_lang = (current_time, data_lang_json.to_string());
 
 
     let mut settings_data: UserSettings = HashMap::new();
-    settings_data.insert("appearance".to_string(), data_item );
-
-    info!("settings_data=");
-    //info!("{}", settings_data.get(session.user_id.clone()).0);
-    //info!("{}", settings_data.get(&session.user_id.clone()).1);
-
+    //增加默认show button
+    settings_data.insert("appearance".to_string(), data_item_show_button );
+    //增加默认语言
+    settings_data.insert("locale".to_string(), data_item_lang );
 
     db.set_user_settings(&session.user_id.clone(), &settings_data ).await?;
     //进行默认用户设置-结束
