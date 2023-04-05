@@ -88,6 +88,24 @@ pub async fn req(
     Json(user_bot_accept_2.with_auto_perspective(db, &user_accept_2).await);
     //taotao 自动添加内置机器人2-Dalle-E-结束
 
+
+
+    //taotao 自动添加内置AiZen客服为好友
+    let mut user_request_3 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_3 = db.fetch_user(&DEFAULT_HELP_ID_3.to_owned()).await?;
+    //taotao 步骤一：AiZen客服发出添加好友请求
+    user_bot_3.add_friend(db, &mut user_request_3).await?;
+    Json(user_request_3.with_auto_perspective(db, &user_bot_3).await);
+
+    //taotao 步骤二：好友同意AiZen客服
+    let mut user_accept_3 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_accept_3 = db.fetch_user(&DEFAULT_HELP_ID_3.to_owned()).await?;
+    user_accept_3.add_friend(db, &mut user_bot_accept_3).await?;
+    Json(user_bot_accept_3.with_auto_perspective(db, &user_accept_3).await);
+    //taotao 自动添加内置AiZen客服-结束
+
+
+
     //taotao 创建内置DM-机器人1-chatgpt
     // Otherwise try to find or create a DM.
     if let Ok(channel_1) = db.find_direct_message_channel(&session.user_id.clone(), &DEFAULT_BOT_ID_1.to_owned()).await {
