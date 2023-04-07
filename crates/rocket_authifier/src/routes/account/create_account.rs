@@ -91,10 +91,10 @@ pub async fn create_account(
     }
 
     //同步创建后台账号
-    if let Ok(res) = create_account_external(password.to_owned(), email.to_owned()).await {
-        println!("{:#?}", res);
+    //if let Ok(res) = create_account_external(password.to_owned(), email.to_owned()).await {
+      //  println!("{:#?}", res);
         //println!("{:#?}", res["message"]);
-    }
+    //}
 
 
     Ok(EmptyResponse)
