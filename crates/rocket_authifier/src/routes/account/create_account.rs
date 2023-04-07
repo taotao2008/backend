@@ -17,7 +17,7 @@ use std::collections::HashMap;
 use serde_json::value::Value;
 
 // 多元世界常量定义
-pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
+pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
 
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
@@ -105,7 +105,7 @@ async fn create_account_external(password: String, email: String) -> Result<Hash
     // post 请求要创建client
     let client = reqwest::Client::new();
 
-    //let url = "http://bk.securechat.cn:8085/sso/registerWithoutAuthCode";
+    //let url = "https://bk-api.aizen.chat/sso/registerWithoutAuthCode";
     let url = ADMIN_URL.to_owned() + "/sso/registerWithoutAuthCode";
 
 

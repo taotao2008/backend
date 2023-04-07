@@ -13,7 +13,7 @@ use rocket_empty::EmptyResponse;
 use std::collections::HashMap;
 use serde_json::value::Value;
 
-pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
+pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
 
 /// # Change Data
 #[derive(Serialize, Deserialize, JsonSchema)]

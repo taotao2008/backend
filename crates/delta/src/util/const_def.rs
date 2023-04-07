@@ -12,4 +12,4 @@ pub static DEFAULT_HELP_ID_3: &'static str = "01GW41YJ06Z2NV2F743C1VCZ8M";
 // 定义管理员
 pub static DEFAULT_ADMIN_ID_1: &'static str = "01GW217Y32AB5R00PB23Y1JCJA";
 // 定义后台计费系统API地址， authifier::create_account 还有一处定义
-pub static ADMIN_URL: &'static str = "http://bk.securechat.cn:8085";
+pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
