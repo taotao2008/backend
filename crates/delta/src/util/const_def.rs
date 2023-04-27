@@ -13,3 +13,6 @@ pub static DEFAULT_HELP_ID_3: &'static str = "01GW41YJ06Z2NV2F743C1VCZ8M";
 pub static DEFAULT_ADMIN_ID_1: &'static str = "01GW217Y32AB5R00PB23Y1JCJA";
 // 定义后台计费系统API地址， authifier::create_account 还有一处定义
 pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
+
+// 定义Midjourney API接口地址
+pub static MIDJOURNEY_URL: &'static str = "http://mj-api.aizen.chat";
