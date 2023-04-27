@@ -28,7 +28,7 @@ pub struct OptionsMidjourneyGet2 {
 ///
 /// Retrieves a message by its id.
 #[openapi(tag = "Messaging")]
-#[get("/<target>/midjourney?<options..>")]
+#[get("/<target>/messages/midjourney?<options..>")]
 pub async fn req(db: &Db, user: User, target: Ref,
                  options: OptionsMidjourneyGet2,) -> Result<Json<Message>> {
 
