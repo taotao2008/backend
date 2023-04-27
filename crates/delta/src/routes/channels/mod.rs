@@ -25,6 +25,7 @@ mod message_unreact;
 mod permissions_set;
 mod permissions_set_default;
 mod voice_join;
+mod midjourney_get;
 
 pub fn routes() -> (Vec<Route>, OpenApi) {
     openapi_get_routes_spec![
@@ -43,6 +44,7 @@ pub fn routes() -> (Vec<Route>, OpenApi) {
         message_edit::req,
         message_bulk_delete::req,
         message_delete::req,
+        midjourney_get::req,
         group_create::req,
         group_add_member::req,
         group_remove_member::req,
