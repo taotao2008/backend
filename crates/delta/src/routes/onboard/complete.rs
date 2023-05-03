@@ -13,8 +13,10 @@ use revolt_quark::r#impl::UserSettingsImpl;
 use chrono::Utc;
 
 use crate::util::const_def::DEFAULT_SERVER_ID_1;
+use crate::util::const_def::DEFAULT_SERVER_ID_2;
 use crate::util::const_def::DEFAULT_BOT_ID_1;
 use crate::util::const_def::DEFAULT_BOT_ID_2;
+use crate::util::const_def::DEFAULT_BOT_ID_3;
 use crate::util::const_def::DEFAULT_HELP_ID_3;
 
 type Data = HashMap<String, String>;
@@ -88,6 +90,20 @@ pub async fn req(
     Json(user_bot_accept_2.with_auto_perspective(db, &user_accept_2).await);
     //taotao 自动添加内置机器人2-Dalle-E-结束
 
+    //taotao 自动添加内置机器人3-Midjouney
+    let mut user_request_3 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_3 = db.fetch_user(&DEFAULT_BOT_ID_3.to_owned()).await?;
+    //taotao 步骤一：机器人发出添加好友请求
+    user_bot_3.add_friend(db, &mut user_request_3).await?;
+    Json(user_request_3.with_auto_perspective(db, &user_bot_3).await);
+
+    //taotao 步骤二：好友同意机器人
+    let mut user_accept_3 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_accept_3 = db.fetch_user(&DEFAULT_BOT_ID_3.to_owned()).await?;
+    user_accept_3.add_friend(db, &mut user_bot_accept_3).await?;
+    Json(user_bot_accept_3.with_auto_perspective(db, &user_accept_3).await);
+    //taotao 自动添加内置机器人3-Midjouney-结束
+
 
 
     //taotao 自动添加内置AiZen客服为好友
@@ -141,6 +157,26 @@ pub async fn req(
     }
     //taotao 创建内置DM-机器人2-dalle-e-结束
 
+
+    //taotao 创建内置DM-机器人3-Midjourney
+    // Otherwise try to find or create a DM.
+    if let Ok(channel_3) = db.find_direct_message_channel(&session.user_id.clone(), &DEFAULT_BOT_ID_3.to_owned()).await {
+        Json(channel_3);
+    } else {
+        let new_channel_3 = Channel::DirectMessage {
+            id: Ulid::new().to_string(),
+            active: true,
+            recipients: vec![session.user_id.clone(), DEFAULT_BOT_ID_3.to_owned()],
+            last_message_id: None,
+        };
+
+        new_channel_3.create(db).await?;
+        Json(new_channel_3);
+    }
+    //taotao 创建内置DM-机器人3-Midjourney-结束
+
+
+
     //taotao 创建内置DM-AiZen客服
     // Otherwise try to find or create a DM.
     if let Ok(channel_3) = db.find_direct_message_channel(&session.user_id.clone(), &DEFAULT_HELP_ID_3.to_owned()).await {
@@ -182,13 +218,21 @@ pub async fn req(
     //进行默认用户设置-结束
 
 
-    //taotao 自动加入内置联邦
-    let server = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
-    server
+    //taotao 自动加入内置联邦1-OpenAI联邦
+    let server_1 = db.fetch_server(&DEFAULT_SERVER_ID_1.to_owned()).await?;
+    server_1
+        .create_member(db, user, None)
+        .await
+        .map(|_| EmptyResponse);
+    //taotao 自动加入内置联邦1-OpenAI联邦-end
+
+    //taotao 自动加入内置联邦2-Midjourney联邦
+    let server_2 = db.fetch_server(&DEFAULT_SERVER_ID_2.to_owned()).await?;
+    server_2
         .create_member(db, user, None)
         .await
         .map(|_| EmptyResponse)
-
+    //taotao 自动加入内置联邦2-Midjourney联邦-end
 
 
 }
