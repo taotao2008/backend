@@ -227,9 +227,10 @@ pub async fn req(
     //taotao 自动加入内置联邦1-OpenAI联邦-end
 
     //taotao 自动加入内置联邦2-Midjourney联邦
+    let mut user_2 = db.fetch_user(&session.user_id.clone()).await?;
     let server_2 = db.fetch_server(&DEFAULT_SERVER_ID_2.to_owned()).await?;
     server_2
-        .create_member(db, user, None)
+        .create_member(db, user_2, None)
         .await
         .map(|_| EmptyResponse)
     //taotao 自动加入内置联邦2-Midjourney联邦-end
