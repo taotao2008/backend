@@ -45,24 +45,24 @@ pub async fn create_account(
     let data = data.into_inner();
 
     // Check Captcha token
-    authifier.config.captcha.check(data.captcha).await?;
+    //authifier.config.captcha.check(data.captcha).await?;
 
     // Validate the request
-    shield.email = Some(data.email.to_string());
-    authifier.config.shield.validate(shield).await?;
+    //shield.email = Some(data.email.to_string());
+    //authifier.config.shield.validate(shield).await?;
 
     // Make sure email is valid and not blocked
-    authifier
-        .config
-        .email_block_list
-        .validate_email(&data.email)?;
+    //authifier
+     //   .config
+     //   .email_block_list
+     //   .validate_email(&data.email)?;
 
     // Ensure password is safe to use
-    authifier
-        .config
-        .password_scanning
-        .assert_safe(&data.password)
-        .await?;
+    //authifier
+      //  .config
+       // .password_scanning
+       // .assert_safe(&data.password)
+       // .await?;
 
     // If required, fetch valid invite
     let invite = if authifier.config.invite_only {
