@@ -10,8 +10,8 @@ repository = "https://github.com/authifier/authifier"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-test = [ "regex", "chrono", "base32"]
-#example = [ "authifier/async-std-runtime", "authifier/database-mongodb", "async-std", "mongodb" ]
+test = [ "regex", "chrono", "base32", "example"]
+example = [ "authifier/async-std-runtime", "authifier/database-mongodb", "async-std", "mongodb" ]
 
 default = [ ]
 
