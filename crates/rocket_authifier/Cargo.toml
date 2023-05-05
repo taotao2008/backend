@@ -10,7 +10,7 @@ repository = "https://github.com/authifier/authifier"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-test = [ "regex", "chrono", "base32", "example"]
+test = [ "regex", "chrono", "base32", "example" ]
 example = [ "authifier/async-std-runtime", "authifier/database-mongodb", "async-std", "mongodb" ]
 
 default = [ ]
@@ -18,9 +18,7 @@ default = [ ]
 [dependencies]
 # Authifier
 #authifier = { version = "1.0.5", path = "../authifier", features = [ "rocket_impl", "okapi_impl" ] }
-#authifier = { version = "1.0.7", features = [ "async-std-runtime" ] }
-# authifier
-authifier = { path = "../authifier", features = [ "async-std-runtime" ] }
+authifier = { version = "1.0.7", features = [ "async-std-runtime" ] }
 
 # Rocket
 rocket = { version = "0.5.0-rc.2", default-features = false, features = ["json"] }
