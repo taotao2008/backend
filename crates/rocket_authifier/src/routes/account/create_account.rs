@@ -51,11 +51,11 @@ pub async fn create_account(
     shield.email = Some(data.email.to_string());
     authifier.config.shield.validate(shield).await?;
 
-    // Make sure email is valid and not blocked
-    authifier
+    // taotao Make sure email is valid and not blocked
+    /*authifier
         .config
         .email_block_list
-        .validate_email(&data.email)?;
+        .validate_email(&data.email)?;*/
 
     // Ensure password is safe to use
     authifier
