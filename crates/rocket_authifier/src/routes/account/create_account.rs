@@ -22,7 +22,6 @@ pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct DataCreateAccount {
-    /// Valid email address
     pub email: String,
     /// Password
     pub password: String,
