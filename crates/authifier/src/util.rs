@@ -8,7 +8,7 @@ lazy_static! {
 
 /// Strip special characters and aliases from emails
 pub fn normalise_email(original: String) -> String {
-    /*lazy_static! {
+    lazy_static! {
         static ref SPLIT: Regex = Regex::new("([^@]+)(@.+)").unwrap();
         static ref SYMBOL_RE: Regex = Regex::new("\\+.+|\\.").unwrap();
     }
@@ -19,8 +19,7 @@ pub fn normalise_email(original: String) -> String {
         .to_string();
 
     clean.push_str(split.get(2).unwrap().as_str());
-    clean.to_lowercase();*/
-    original.to_lowercase()
+    clean.to_lowercase()
 }
 
 /// Hash a password using argon2
