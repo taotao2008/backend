@@ -18,9 +18,9 @@ default = [ ]
 [dependencies]
 # Authifier
 #authifier = { version = "1.0.5", path = "../authifier", features = [ "rocket_impl", "okapi_impl" ] }
-#authifier = { version = "1.0.7", features = [ "async-std-runtime" ] }
-#authifier = { path = "../authifier", features = [ "async-std-runtime" ] }
-authifier = { path = "../authifier", features = [ "rocket_impl", "okapi_impl", "async-std-runtime", "database-mongodb" ] }
+authifier = { version = "1.0.7", features = [ "async-std-runtime" ] }
+
+#authifier = { path = "../authifier", features = [ "rocket_impl", "okapi_impl", "async-std-runtime", "database-mongodb" ]}
 
 
 # Rocket
