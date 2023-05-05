@@ -47,15 +47,15 @@ pub async fn create_account(
     // Check Captcha token
     authifier.config.captcha.check(data.captcha).await?;
 
-    //taotao Validate the request
-    //shield.email = Some(data.email.to_string());
-    //authifier.config.shield.validate(shield).await?;
+    // Validate the request
+    shield.email = Some(data.email.to_string());
+    authifier.config.shield.validate(shield).await?;
 
-    // taotao Make sure email is valid and not blocked
-    //authifier
-      //  .config
-       // .email_block_list
-        //.validate_email(&data.email)?;
+    // Make sure email is valid and not blocked
+    authifier
+        .config
+        .email_block_list
+        .validate_email(&data.email)?;
 
     // Ensure password is safe to use
     authifier
