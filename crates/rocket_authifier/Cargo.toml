@@ -11,7 +11,7 @@ repository = "https://github.com/authifier/authifier"
 
 [features]
 test = [ "regex", "chrono", "base32", "example" ]
-example = [ "authifier/async-std-runtime", "authifier/database-mongodb", "async-std", "mongodb" ]
+#example = [ "authifier/async-std-runtime", "authifier/database-mongodb", "async-std", "mongodb" ]
 
 default = [ ]
 
