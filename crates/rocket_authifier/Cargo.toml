@@ -19,6 +19,8 @@ default = [ ]
 # Authifier
 #authifier = { version = "1.0.5", path = "../authifier", features = [ "rocket_impl", "okapi_impl" ] }
 #authifier = { version = "1.0.7", features = [ "async-std-runtime" ] }
+# authifier
+authifier = { path = "../authifier" }
 
 # Rocket
 rocket = { version = "0.5.0-rc.2", default-features = false, features = ["json"] }
