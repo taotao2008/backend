@@ -52,9 +52,7 @@ pub async fn create_account(
     authifier.config.shield.validate(shield).await?;
 
     // Make sure email is valid and not blocked
-    authifier
-        .config
-        .email_block_list;
+
 
     // Ensure password is safe to use
     authifier
