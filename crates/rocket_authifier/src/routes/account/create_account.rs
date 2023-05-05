@@ -22,9 +22,14 @@ pub static ADMIN_URL: &'static str = "https://bk-api.aizen.chat";
 /// # Account Data
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct DataCreateAccount {
+    /// Valid email address
     pub email: String,
     /// Password
     pub password: String,
+    /// Invite code
+    pub invite: Option<String>,
+    /// Captcha verification code
+    pub captcha: Option<String>,
 }
 
 /// # Create Account
@@ -35,9 +40,40 @@ pub struct DataCreateAccount {
 pub async fn create_account(
     authifier: &State<Authifier>,
     data: Json<DataCreateAccount>,
+    mut shield: ShieldValidationInput,
 ) -> Result<EmptyResponse> {
     let data = data.into_inner();
 
+    // Check Captcha token
+    authifier.config.captcha.check(data.captcha).await?;
+
+    // Validate the request
+    shield.email = Some(data.email.to_string());
+    authifier.config.shield.validate(shield).await?;
+
+    // Make sure email is valid and not blocked
+    authifier
+        .config
+        .email_block_list
+        .validate_email(&data.email)?;
+
+    // Ensure password is safe to use
+    authifier
+        .config
+        .password_scanning
+        .assert_safe(&data.password)
+        .await?;
+
+    // If required, fetch valid invite
+    let invite = if authifier.config.invite_only {
+        if let Some(invite) = data.invite {
+            Some(authifier.database.find_invite(&invite).await?)
+        } else {
+            return Err(Error::MissingInvite);
+        }
+    } else {
+        None
+    };
 
 
     let email = &data.email;
@@ -46,7 +82,13 @@ pub async fn create_account(
     // Create account
     let account = Account::new(authifier, email.to_string(), password.to_string(), true).await?;
 
+    // Use up the invite
+    if let Some(mut invite) = invite {
+        invite.claimed_by = Some(account.id);
+        invite.used = true;
 
+        authifier.database.save_invite(&invite).await?;
+    }
 
     //同步创建后台账号
     //if let Ok(res) = create_account_external(password.to_owned(), email.to_owned()).await {
