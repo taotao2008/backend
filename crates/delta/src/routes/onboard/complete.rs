@@ -17,6 +17,7 @@ use crate::util::const_def::DEFAULT_SERVER_ID_2;
 use crate::util::const_def::DEFAULT_BOT_ID_1;
 use crate::util::const_def::DEFAULT_BOT_ID_2;
 use crate::util::const_def::DEFAULT_BOT_ID_3;
+use crate::util::const_def::DEFAULT_BOT_ID_4;
 use crate::util::const_def::DEFAULT_HELP_ID_3;
 
 type Data = HashMap<String, String>;
@@ -105,6 +106,21 @@ pub async fn req(
     //taotao 自动添加内置机器人3-Midjouney-结束
 
 
+    //taotao 自动添加内置机器人4-Openjouney
+    let mut user_request_4 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_4 = db.fetch_user(&DEFAULT_BOT_ID_4.to_owned()).await?;
+    //taotao 步骤一：机器人发出添加好友请求
+    user_bot_4.add_friend(db, &mut user_request_4).await?;
+    Json(user_request_4.with_auto_perspective(db, &user_bot_4).await);
+
+    //taotao 步骤二：好友同意机器人
+    let mut user_accept_4 = db.fetch_user(&session.user_id.clone()).await?;
+    let mut user_bot_accept_4 = db.fetch_user(&DEFAULT_BOT_ID_4.to_owned()).await?;
+    user_accept_4.add_friend(db, &mut user_bot_accept_4).await?;
+    Json(user_bot_accept_4.with_auto_perspective(db, &user_accept_4).await);
+    //taotao 自动添加内置机器人4-Openjouney-结束
+
+
 
     //taotao 自动添加内置AiZen客服为好友
     let mut user_request_3 = db.fetch_user(&session.user_id.clone()).await?;
@@ -174,6 +190,23 @@ pub async fn req(
         Json(new_channel_3);
     }
     //taotao 创建内置DM-机器人3-Midjourney-结束
+
+    //taotao 创建内置DM-机器人4-Openjourney
+    // Otherwise try to find or create a DM.
+    if let Ok(channel_4) = db.find_direct_message_channel(&session.user_id.clone(), &DEFAULT_BOT_ID_4.to_owned()).await {
+        Json(channel_4);
+    } else {
+        let new_channel_4 = Channel::DirectMessage {
+            id: Ulid::new().to_string(),
+            active: true,
+            recipients: vec![session.user_id.clone(), DEFAULT_BOT_ID_4.to_owned()],
+            last_message_id: None,
+        };
+
+        new_channel_4.create(db).await?;
+        Json(new_channel_4);
+    }
+    //taotao 创建内置DM-机器人4-Openjourney-结束
 
 
 

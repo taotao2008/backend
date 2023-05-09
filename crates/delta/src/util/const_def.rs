@@ -10,6 +10,8 @@ pub static DEFAULT_BOT_ID_1: &'static str = "01GW21K5B3Q9B5HHHNEYY4AKYP";
 pub static DEFAULT_BOT_ID_2: &'static str = "01GW47PSTNTDXKK9TB933NBGKA";
 // 定义内置机器人3-Midjourney
 pub static DEFAULT_BOT_ID_3: &'static str = "01GY6Q8YSA5AJP6MGRYPKHSJ77";
+// 定义内置机器人4-Openjourney
+pub static DEFAULT_BOT_ID_4: &'static str = "01GZ43ZC37N52827NMM30JJCEM";
 // 定义内置AiZen客服一
 pub static DEFAULT_HELP_ID_3: &'static str = "01GW41YJ06Z2NV2F743C1VCZ8M";
 
